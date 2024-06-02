@@ -13,12 +13,25 @@
  * COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulta los
  * detalles de la Licencia Pública General GNU para obtener más detalles.
  */
-package com.elopez.scrum.platform.base.store;
+package com.elopez.scrum.platform.base.rest;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.NoRepositoryBean;
+public class ExceptionDto {
 
-@NoRepositoryBean
-public interface BaseRepository<E extends BaseEntity> extends JpaRepository<E, String> {
+    private int code;
+    private String message;
 
+    public int getCode() {
+        return code;
+    }
+    public void setCode(int code) {
+        this.code = code;
+    }
+    public String getMessage() {
+        return message;
+    }
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    
 }

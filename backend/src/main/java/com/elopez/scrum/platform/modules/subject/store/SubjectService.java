@@ -13,12 +13,22 @@
  * COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulta los
  * detalles de la Licencia Pública General GNU para obtener más detalles.
  */
-package com.elopez.scrum.platform.base.store;
+package com.elopez.scrum.platform.modules.subject.store;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@NoRepositoryBean
-public interface BaseRepository<E extends BaseEntity> extends JpaRepository<E, String> {
+import com.elopez.scrum.platform.base.store.BaseService;
 
+@Service
+public class SubjectService extends BaseService<SubjectEntity> {
+
+    @Autowired
+    private SubjectRepository repository;
+
+    @Override
+    protected SubjectRepository getRepository() {
+        return repository;
+    }
+    
 }

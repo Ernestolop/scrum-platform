@@ -1,0 +1,14 @@
+services:
+  db:
+    image: postgres:16.3-alpine
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    volumes:
+      - scrum_platform_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    
+volumes:
+  scrum_platform_data:
