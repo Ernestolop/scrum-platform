@@ -38,18 +38,17 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @RestController
 @RequestMapping("subjects")
 public class SubjectController extends BaseController {
-    
-    @Operation(summary = "Create a new subject")
+
+    @Operation(summary = "Create a new subject", description = "This operation creates a new subject with the provided data.")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = SubjectEntity.class), mediaType = "application/json") }),
-        @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema(implementation = ExceptionDto.class), mediaType = "application/json") }),
-        @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) })
+            @ApiResponse(responseCode = "200", description = "Indicates that the subject was successfully created.", content = {
+                    @Content(schema = @Schema(implementation = SubjectEntity.class, description = "The created subject."), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", description = "Indicates that there was a problem with the provided data.", content = {
+                    @Content(schema = @Schema(implementation = ExceptionDto.class, description = "Details about the error."), mediaType = "application/json") }),
     })
     @PostMapping
     public ResponseEntity<?> createSubject(@RequestBody CreateSubjectArgument subject) {
         return handle(CreateSubjectAction.class, subject);
     }
-
-    
 
 }

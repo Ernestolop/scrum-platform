@@ -15,11 +15,20 @@
  */
 package com.elopez.scrum.platform.base.rest.actions;
 
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import com.elopez.scrum.platform.base.rest.EndpointException;
 
-public abstract class BaseAction<A, R> implements Action<A, R>{
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
+
+public abstract class BaseAction<A, R> implements Action<A, R> {
+
+    @Autowired
+    private Validator validator;
 
     private A argument;
     private R result;
@@ -43,9 +52,13 @@ public abstract class BaseAction<A, R> implements Action<A, R>{
     public void setResult(R result) {
         this.result = result;
     }
-    
 
-    protected abstract void checkArgument();
+    protected void checkArgument() {
+        Set<ConstraintViolation<A>> violations = validator.validate(getArgument());
+        if (!violations.isEmpty()) {
+            throwException(HttpStatus.BAD_REQUEST.value(), violations.iterator().next().getMessage());
+        }
+    }
 
     protected abstract void checkOnDataBase();
 

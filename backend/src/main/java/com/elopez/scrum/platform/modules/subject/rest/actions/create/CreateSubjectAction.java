@@ -15,18 +15,12 @@
  */
 package com.elopez.scrum.platform.modules.subject.rest.actions.create;
 
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.elopez.scrum.platform.base.rest.actions.BaseAction;
 import com.elopez.scrum.platform.modules.subject.store.SubjectEntity;
 import com.elopez.scrum.platform.modules.subject.store.SubjectService;
-
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validator;
 
 @Service
 public class CreateSubjectAction extends BaseAction<CreateSubjectArgument, SubjectEntity>{
@@ -34,17 +28,6 @@ public class CreateSubjectAction extends BaseAction<CreateSubjectArgument, Subje
     @Autowired
     private SubjectService entityService;
     private SubjectEntity entity;
-    @Autowired
-    private Validator validator;
-
-    @Override
-    protected void checkArgument() {
-        System.out.println("Checking argument");
-        Set<ConstraintViolation<CreateSubjectArgument>> violations = validator.validate(getArgument());
-        if (!violations.isEmpty()) {
-            throwException(HttpStatus.BAD_REQUEST.value(), violations.toString());
-        }
-    }
 
     @Override
     protected void checkOnDataBase() {

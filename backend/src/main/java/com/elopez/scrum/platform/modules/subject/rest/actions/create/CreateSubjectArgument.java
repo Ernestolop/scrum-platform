@@ -16,46 +16,30 @@
 package com.elopez.scrum.platform.modules.subject.rest.actions.create;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class CreateSubjectArgument {
-    
-    @NotNull(message = "First name is required")
-    @NotEmpty(message = "First name is required")
-    @Size(min = 2, max = 255, message = "First name must be between 2 and 255 characters")
+
+    @NotNull(message = "{firstName.required}")
+    @NotEmpty(message = "{firstName.required}")
+    @Size(min = 2, max = 255, message = "{firstName.size}")
     private String firstName;
-    @NotNull(message = "Last name is required")
-    @NotEmpty(message = "Last name is required")
-    @Size(min = 2, max = 255, message = "Last name must be between 2 and 255 characters")
+
+    @NotNull(message = "{lastName.required}")
+    @NotEmpty(message = "{lastName.required}")
+    @Size(min = 2, max = 255, message = "{lastName.size}")
     private String lastName;
-    @NotNull(message = "Email is required")
-    @NotEmpty(message = "Email is required")
-    @Email(message = "Email is not valid")
-    @Max(value = 255, message = "Email must be less than 255 characters")
+
+    @NotNull(message = "{email.required}")
+    @NotEmpty(message = "{email.required}")
+    @Email(message = "{email.invalid}")
+    @Size(max = 255, message = "{email.size}")
     private String email;
-
-    public String getFirstName() {
-        return firstName;
-    }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    public String getLastName() {
-        return lastName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    
 
 }

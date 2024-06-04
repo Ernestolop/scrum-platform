@@ -13,7 +13,7 @@
  * COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulta los
  * detalles de la Licencia Pública General GNU para obtener más detalles.
  */
- package com.elopez.scrum.platform.config;
+ package com.elopez.scrum.platform.configs;
  import java.util.List;
  
  import org.springframework.beans.factory.annotation.Value;
