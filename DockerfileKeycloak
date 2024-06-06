@@ -1,0 +1,40 @@
+FROM quay.io/keycloak/keycloak:24.0.4
+
+# Establecer el directorio de trabajo
+WORKDIR /opt/keycloak
+
+# Crear los directorios necesarios
+#RUN mkdir -p /opt/keycloak/themes/theme
+
+# Copiar los archivos necesarios
+#COPY theme /opt/keycloak/themes/theme
+#COPY server.crt /opt/keycloak/certs/server.crt
+#COPY server.key /opt/keycloak/certs/server.key
+
+# Establecer la zona horaria
+ENV TZ=America/Asuncion
+
+# Habilitar features
+ENV KC_FEATURES=admin-fine-grained-authz,token-exchange
+
+# Configurar la base de datos
+ENV KC_DB=postgres
+
+# Configurar el puerto HTTP
+#ENV KC_HTTP_PORT=8080
+
+# Configurar el proxy
+ENV KC_PROXY=edge
+
+# Configurar certificados HTTPS (comentado)
+#ENV KC_HTTPS_PORT=443
+#ENV KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/certs/server.crt
+#ENV KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/certs/server.key
+ENV KC_HOSTNAME_STRICT=false
+ENV KC_HOSTNAME_STRICT_HTTPS=false
+
+# Establecer el punto de entrada
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
+
+# Establecer el comando por defecto
+CMD ["start"]
