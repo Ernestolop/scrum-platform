@@ -13,13 +13,13 @@
  * COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulta los
  * detalles de la Licencia Pública General GNU para obtener más detalles.
  */
-package com.elopez.scrum.platform.modules.subject.rest;
+package com.elopez.scrum.platform.modules.account.rest;
 
 import org.springframework.http.ResponseEntity;
 
 import com.elopez.scrum.platform.base.rest.ExceptionDto;
-import com.elopez.scrum.platform.modules.subject.rest.actions.create.CreateSubjectArgument;
-import com.elopez.scrum.platform.modules.subject.store.SubjectEntity;
+import com.elopez.scrum.platform.modules.account.rest.actions.create.CreateAccountArgument;
+import com.elopez.scrum.platform.modules.account.store.AccountEntity;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,16 +28,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Subjects", description = "Subject Management API")
-public interface ISubjectController {
+@Tag(name = "Accounts", description = "Accounts Management API")
+public interface IAccountController {
 
-    @Operation(summary = "Create a new subject", description = "This operation creates a new subject with the provided data.")
+    @Operation(summary = "Create a new account", description = "This operation creates a new account with the provided data.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Indicates that the subject was successfully created.", content = {
-                    @Content(schema = @Schema(implementation = SubjectEntity.class, description = "The created subject."), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "200", description = "Indicates that the account was successfully created.", content = {
+                    @Content(schema = @Schema(implementation = AccountEntity.class, description = "The created account."), mediaType = "application/json") }),
             @ApiResponse(responseCode = "400", description = "Indicates that there was a problem with the provided data.", content = {
                     @Content(schema = @Schema(implementation = ExceptionDto.class, description = "Details about the error."), mediaType = "application/json") }),
     })
-    public ResponseEntity<?> createSubject(CreateSubjectArgument subject);
+    public ResponseEntity<?> createAccount(CreateAccountArgument account);
 
 }

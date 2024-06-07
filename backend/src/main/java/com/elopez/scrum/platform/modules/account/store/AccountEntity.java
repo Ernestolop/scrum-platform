@@ -13,22 +13,27 @@
  * COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulta los
  * detalles de la Licencia Pública General GNU para obtener más detalles.
  */
-package com.elopez.scrum.platform.modules.subject.store;
+package com.elopez.scrum.platform.modules.account.store;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.elopez.scrum.platform.base.store.BaseEntity;
 
-import com.elopez.scrum.platform.base.store.BaseService;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
-@Service
-public class SubjectService extends BaseService<SubjectEntity> {
+@Getter
+@Setter
+@Entity
+@Table(name = "accounts")
+public class AccountEntity extends BaseEntity {
 
-    @Autowired
-    private SubjectRepository repository;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    private String email;
+    private String principal;
 
-    @Override
-    protected SubjectRepository getRepository() {
-        return repository;
-    }
-    
 }

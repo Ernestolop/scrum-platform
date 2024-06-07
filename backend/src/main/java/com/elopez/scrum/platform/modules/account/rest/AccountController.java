@@ -13,7 +13,7 @@
  * COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulta los
  * detalles de la Licencia Pública General GNU para obtener más detalles.
  */
-package com.elopez.scrum.platform.modules.subject.rest;
+package com.elopez.scrum.platform.modules.account.rest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,16 +22,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.elopez.scrum.platform.base.rest.BaseController;
-import com.elopez.scrum.platform.modules.subject.rest.actions.create.CreateSubjectAction;
-import com.elopez.scrum.platform.modules.subject.rest.actions.create.CreateSubjectArgument;
+import com.elopez.scrum.platform.modules.account.rest.actions.create.CreateAccountAction;
+import com.elopez.scrum.platform.modules.account.rest.actions.create.CreateAccountArgument;
 
 @RestController
-@RequestMapping("subjects")
-public class SubjectController extends BaseController implements ISubjectController {
+@RequestMapping("accounts")
+public class AccountController extends BaseController implements IAccountController {
 
     @PostMapping
-    public ResponseEntity<?> createSubject(@RequestBody CreateSubjectArgument subject) {
-        return handle(CreateSubjectAction.class, subject);
+    public ResponseEntity<?> createAccount(@RequestBody CreateAccountArgument account) {
+        return handle(CreateAccountAction.class, account);
     }
 
 }

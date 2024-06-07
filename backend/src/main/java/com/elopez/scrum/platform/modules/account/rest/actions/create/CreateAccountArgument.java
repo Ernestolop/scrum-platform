@@ -13,7 +13,7 @@
  * COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulta los
  * detalles de la Licencia Pública General GNU para obtener más detalles.
  */
-package com.elopez.scrum.platform.modules.subject.rest.actions.create;
+package com.elopez.scrum.platform.modules.account.rest.actions.create;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -24,16 +24,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateSubjectArgument {
+public class CreateAccountArgument {
 
     @NotNull(message = "{firstName.required}")
     @NotEmpty(message = "{firstName.required}")
-    @Size(min = 2, max = 255, message = "{firstName.size}")
+    @Size(max = 255, message = "{firstName.size}")
     private String firstName;
 
-    @NotNull(message = "{lastName.required}")
-    @NotEmpty(message = "{lastName.required}")
-    @Size(min = 2, max = 255, message = "{lastName.size}")
+    @Size(max = 255, message = "{lastName.size}")
     private String lastName;
 
     @NotNull(message = "{email.required}")
@@ -41,5 +39,13 @@ public class CreateSubjectArgument {
     @Email(message = "{email.invalid}")
     @Size(max = 255, message = "{email.size}")
     private String email;
+
+    @NotNull(message = "{username.required}")
+    @Size(min = 2, max = 255, message = "{username.size}")
+    private String username;
+
+    @NotNull(message = "{password.required}")
+    @Size(min = 6, max = 255, message = "{password.size}")
+    private String password;
 
 }

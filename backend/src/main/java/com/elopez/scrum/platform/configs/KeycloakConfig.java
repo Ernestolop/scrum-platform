@@ -30,7 +30,7 @@ public class KeycloakConfig {
     @Value("${keycloak.connector.realm}")
     private String realm;
 
-    @Value("${keycloak.connector.client}")
+    @Value("${keycloak.connector.client-id}")
     private String client;
 
     @Value("${keycloak.connector.username}")

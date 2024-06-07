@@ -13,35 +13,34 @@
  * COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulta los
  * detalles de la Licencia Pública General GNU para obtener más detalles.
  */
-package com.elopez.scrum.platform.modules.subject.rest.actions.create;
+package com.elopez.scrum.platform.modules.account.store;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.elopez.scrum.platform.base.rest.actions.BaseAction;
-import com.elopez.scrum.platform.modules.subject.store.SubjectEntity;
-import com.elopez.scrum.platform.modules.subject.store.SubjectService;
+import com.elopez.scrum.platform.base.store.BaseService;
 
 @Service
-public class CreateSubjectAction extends BaseAction<CreateSubjectArgument, SubjectEntity>{
+public class AccountService extends BaseService<AccountEntity> {
 
     @Autowired
-    private SubjectService entityService;
-    private SubjectEntity entity;
+    private AccountRepository repository;
 
-    @Override
-    protected void checkOnDataBase() {
-        System.out.println("Checking on database");
+    public boolean existById(String id) {
+        return repository.existsById(id);
+    }
+
+    public boolean existByUsername(String username) {
+        return repository.existsByPrincipal(username);
+    }
+
+    public boolean existByEmail(String email) {
+        return repository.existsByEmail(email);
     }
 
     @Override
-    protected void doAction() {
-        System.out.println("Doing action");
-    }
-
-    @Override
-    protected void setActionResult() {
-        setResult(entity);
+    protected AccountRepository getRepository() {
+        return repository;
     }
     
 }

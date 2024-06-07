@@ -15,14 +15,17 @@
  */
 package com.elopez.scrum.platform.connectors.keycloak;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.keycloak.admin.client.Keycloak;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import jakarta.ws.rs.core.Response;
 
+import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 
 @Service
@@ -31,7 +34,8 @@ public class KeycloakConnector {
     @Autowired
     private Keycloak keycloak;
 
-    private final String realm = "your_realm";
+    @Value("${keycloak.connector.realm}")
+    private String realm;
 
     public List<UserRepresentation> getAllUsers() {
         return keycloak.realm(realm).users().list();
@@ -41,14 +45,20 @@ public class KeycloakConnector {
         return keycloak.realm(realm).users().get(userId).toRepresentation();
     }
 
-    public String createUser(UserRepresentation user) {
+    public String createUser(UserRepresentation user, String password) {
+        CredentialRepresentation credential = new CredentialRepresentation();
+        credential.setTemporary(false); // Si la contraseña es temporal o no
+        credential.setType(CredentialRepresentation.PASSWORD);
+        credential.setValue(password);
+
+        user.setCredentials(Collections.singletonList(credential));
+
         Response response = keycloak.realm(realm).users().create(user);
         if (response.getStatus() == 201) {
             return response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
         }
         return null;
     }
-
     public void updateUser(String userId, UserRepresentation user) {
         keycloak.realm(realm).users().get(userId).update(user);
     }

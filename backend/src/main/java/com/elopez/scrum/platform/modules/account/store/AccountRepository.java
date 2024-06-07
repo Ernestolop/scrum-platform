@@ -13,13 +13,20 @@
  * COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulta los
  * detalles de la Licencia Pública General GNU para obtener más detalles.
  */
-package com.elopez.scrum.platform.modules.subject.store;
+package com.elopez.scrum.platform.modules.account.store;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.elopez.scrum.platform.base.store.BaseRepository;
 
 @Repository
-public interface SubjectRepository extends BaseRepository<SubjectEntity> {
-    
+public interface AccountRepository extends BaseRepository<AccountEntity> {
+
+    @Query(value = "SELECT EXISTS(SELECT 1 FROM accounts WHERE principal = :username)", nativeQuery = true)
+    boolean existsByPrincipal(String username);
+
+    @Query(value = "SELECT EXISTS(SELECT 1 FROM accounts WHERE email = :email)", nativeQuery = true)
+    boolean existsByEmail(String email);
+
 }
