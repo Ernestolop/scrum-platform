@@ -13,8 +13,18 @@
  * COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulta los
  * detalles de la Licencia Pública General GNU para obtener más detalles.
  */
-package com.elopez.scrum.platform.base;
+package com.elopez.scrum.platform.modules.account.rest.actions.list;
 
-public enum BaseErrors {
-    
+import org.springframework.data.domain.Pageable;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ListAccountsArgument {
+
+    private Pageable pageable;
+    private String searchParam;
+
 }

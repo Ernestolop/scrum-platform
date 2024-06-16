@@ -20,6 +20,10 @@ import com.elopez.scrum.platform.base.store.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,10 +34,19 @@ import lombok.Setter;
 public class AccountEntity extends BaseEntity {
 
     @Column(name = "first_name")
+    @Size(max = 255, message = "{firstName.size}")
     private String firstName;
     @Column(name = "last_name")
+    @Size(max = 255, message = "{lastName.size}")
     private String lastName;
+    @NotNull(message = "{email.required}")
+    @NotEmpty(message = "{email.required}")
+    @Email(message = "{email.invalid}")
     private String email;
+    @NotNull(message = "{username.required}")
+    @Size(min = 2, max = 255, message = "{username.size}")
+    private String username;
+    @NotNull
     private String principal;
 
 }

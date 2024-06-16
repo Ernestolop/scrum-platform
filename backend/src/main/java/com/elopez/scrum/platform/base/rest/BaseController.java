@@ -34,7 +34,6 @@ public class BaseController {
 
     protected <C extends BaseAction, A> ResponseEntity<?> handle(Class<C> actionClass, A argument) {
         try {
-            //BaseAction<A, ?> action = actionClass.getConstructor().newInstance();
             C action = aplicationContext.getBean(actionClass);
             action.setArgument(argument);
             action.execute();
@@ -62,7 +61,6 @@ public class BaseController {
         LOGGER.severe(endpointException.getMessage());
 
         ExceptionDto error = new ExceptionDto();
-        error.setCode(endpointException.getCode());
         error.setMessage(endpointException.getMessage());
 
         return ResponseEntity.status(endpointException.getStatus()).body(error);

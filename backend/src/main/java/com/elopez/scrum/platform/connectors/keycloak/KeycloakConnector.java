@@ -45,9 +45,13 @@ public class KeycloakConnector {
         return keycloak.realm(realm).users().get(userId).toRepresentation();
     }
 
-    public String createUser(UserRepresentation user, String password) {
+    public UserRepresentation getUserByUsername(String username) {
+        return keycloak.realm(realm).users().search(username).get(0);
+    }
+
+    public UserRepresentation createUser(UserRepresentation user, String password) {
         CredentialRepresentation credential = new CredentialRepresentation();
-        credential.setTemporary(false); // Si la contraseña es temporal o no
+        credential.setTemporary(false);
         credential.setType(CredentialRepresentation.PASSWORD);
         credential.setValue(password);
 
@@ -55,10 +59,11 @@ public class KeycloakConnector {
 
         Response response = keycloak.realm(realm).users().create(user);
         if (response.getStatus() == 201) {
-            return response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
+            return getUserByUsername(user.getUsername());
         }
-        return null;
+        throw new RuntimeException("Error creating user");
     }
+
     public void updateUser(String userId, UserRepresentation user) {
         keycloak.realm(realm).users().get(userId).update(user);
     }

@@ -13,22 +13,23 @@
  * COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulta los
  * detalles de la Licencia Pública General GNU para obtener más detalles.
  */
-package com.elopez.scrum.platform.base.rest.actions;
+package com.elopez.scrum.platform.modules.account.rest.actions.update;
 
-import org.springframework.http.HttpStatus;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
-public interface Action<A, R> {
+@Getter
+@Setter
+public class UpdateAccountArgument {
 
-    public A getArgument();
-
-    public void setArgument(A argument);
-
-    public R getResult();
-
-    public void setResult(R result);
-
-    public void execute();
-
-    public void throwException(HttpStatus httpStatus, String message);
+    @NotEmpty(message = "{username.required}")
+    private String username;
+    //private String newUsername;
+    @Size(max = 255, message = "{firstName.size}")
+    private String firstName;
+    @Size(max = 255, message = "{lastName.size}")
+    private String lastName;    
 
 }

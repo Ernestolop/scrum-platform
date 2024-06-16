@@ -56,7 +56,7 @@ public abstract class BaseAction<A, R> implements Action<A, R> {
     protected void checkArgument() {
         Set<ConstraintViolation<A>> violations = validator.validate(getArgument());
         if (!violations.isEmpty()) {
-            throwException(HttpStatus.BAD_REQUEST.value(), violations.iterator().next().getMessage());
+            throwException(HttpStatus.BAD_REQUEST, violations.iterator().next().getMessage());
         }
     }
 
@@ -75,7 +75,7 @@ public abstract class BaseAction<A, R> implements Action<A, R> {
     }
 
     @Override
-    public void throwException(int code, String message) {
-        throw new EndpointException(code, message, HttpStatus.BAD_REQUEST);
+    public void throwException(HttpStatus httpStatus, String message) {
+        throw new EndpointException(httpStatus, message);
     }
 }

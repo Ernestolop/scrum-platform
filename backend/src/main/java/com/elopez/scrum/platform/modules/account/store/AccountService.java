@@ -16,6 +16,8 @@
 package com.elopez.scrum.platform.modules.account.store;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.elopez.scrum.platform.base.store.BaseService;
@@ -31,16 +33,32 @@ public class AccountService extends BaseService<AccountEntity> {
     }
 
     public boolean existByUsername(String username) {
-        return repository.existsByPrincipal(username);
+        return repository.existsByUsername(username);
     }
 
     public boolean existByEmail(String email) {
         return repository.existsByEmail(email);
     }
 
+    public boolean existByUsernameExceptId(String username, String id) {
+        return repository.existsByUsernameExceptId(username, id);
+    }
+
+    public boolean existByUsernameExceptUsername(String newUsername, String username) {
+        return repository.existsByUsernameExceptUsername(newUsername, username);
+    }
+
+    public AccountEntity findByUsername(String username) {
+        return repository.findByUsername(username).orElse(null);
+    }
+
+    public Page<AccountEntity> findAllBySearchParam(Pageable pageable, String searchParam) {
+        return repository.findAllBySearchParam(pageable, searchParam);
+    }
+
     @Override
     protected AccountRepository getRepository() {
         return repository;
     }
-    
+
 }

@@ -15,8 +15,11 @@
  */
 package com.elopez.scrum.platform.modules.account.rest.actions.create;
 
+import java.util.logging.Logger;
+
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.elopez.scrum.platform.base.rest.actions.BaseAction;
@@ -33,36 +36,41 @@ public class CreateAccountAction extends BaseAction<CreateAccountArgument, Accou
     @Autowired
     private KeycloakConnector keycloakConnector;
 
+    private Logger log = Logger.getLogger(CreateAccountAction.class.getName());
+
     @Override
     protected void checkOnDataBase() {
         if (entityService.existByUsername(getArgument().getUsername()))
-            throwException(400, "Username already exists");
+            throwException(HttpStatus.BAD_REQUEST, "{username.exists}");
 
         if (entityService.existByEmail(getArgument().getEmail()))
-            throwException(400, "Email already exists");
+            throwException(HttpStatus.BAD_REQUEST, "{email.exists}");
     }
 
     @Override
     protected void doAction() {
-        
+
+        UserRepresentation user = new UserRepresentation();
+
         try {
-            UserRepresentation user = new UserRepresentation();
             user.setUsername(getArgument().getUsername());
             user.setEmail(getArgument().getEmail());
             user.setFirstName(getArgument().getFirstName());
             user.setLastName(getArgument().getLastName());
             user.setEmailVerified(false);
             user.setEnabled(true);
-            keycloakConnector.createUser(user, getArgument().getPassword());
+            user = keycloakConnector.createUser(user, getArgument().getPassword());
         } catch (Exception e) {
-            throwException(500, e.getMessage());
+            log.severe("Error creating user in Keycloak: " + e.getMessage());
+            throw new RuntimeException("Error creating user in Keycloak");
         }
 
         entity = new AccountEntity();
-        entity.setPrincipal(getArgument().getUsername());
+        entity.setUsername(getArgument().getUsername());
         entity.setEmail(getArgument().getEmail());
         entity.setFirstName(getArgument().getFirstName());
         entity.setLastName(getArgument().getLastName());
+        entity.setPrincipal(user.getId());
         entity = entityService.add(entity);
 
     }
